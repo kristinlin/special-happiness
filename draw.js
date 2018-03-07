@@ -11,10 +11,14 @@ var draw = function(e) {
 
 // circle clicked on again; rm it or change color; don't add circle to board
 var again = function(e) {
-    if ( this.getAttribute("rm") < 1 ) {
-	rm_process(this);
+    if ( this.getAttribute("rm") == "t" ) {
+	this.remove();
+	circling( Math.floor(Math.random() * 500),
+		  Math.floor(Math.random() * 500) );
+
     } else {
-	first(this, rand_color());
+	this.setAttribute("fill", rand_color());
+	this.setAttribute("rm", "t");
     }
     e.stopPropagation();
 }
@@ -25,7 +29,7 @@ var again = function(e) {
 // create circle element; add attributes; append child
 var circling = function( x, y ) {
     var cic = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    cic.setAttribute("rm", 1);
+    cic.setAttribute("rm", "f");
     cic.setAttribute("cx", x.toString());
     cic.setAttribute("cy", y.toString());
     cic.setAttribute("r", 15);
@@ -45,19 +49,6 @@ var rand_color = function() {
     return color;
 }
 
-// change color; switch the remove button
-var first = function( item, color ) {
-    item.setAttribute("fill", color);
-    item.setAttribute("rm", item.getAttribute("rm") * -1);
-}
-
-
-//remove the circle and add a new one in a random area
-var rm_process = function( item ) {
-    item.remove();
-    circling( Math.floor(Math.random() * 500),
-	      Math.floor(Math.random() * 500) );
-}
 
 
 //=========================================================
